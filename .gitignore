@@ -1,0 +1,8 @@
+.idea/
+.venv/
+__pycache__/
+*.pyc
+*.ncm
+*.mp3
+*.zip
+.DS_Store
