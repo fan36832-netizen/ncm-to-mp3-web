@@ -1,11 +1,14 @@
 const fileInput = document.getElementById("file-input");
 const dropzone = document.getElementById("dropzone");
 const selection = document.getElementById("selection");
+const progressNode = document.getElementById("progress");
+const progressTextNode = document.getElementById("progress-text");
 const convertButton = document.getElementById("convert-button");
 const statusNode = document.getElementById("status");
 
 let selectedFile = null;
 let isConverting = false;
+const defaultButtonLabel = convertButton.textContent.trim();
 
 function formatBytes(size) {
   const units = ["B", "KB", "MB", "GB"];
@@ -28,6 +31,16 @@ function setStatus(message, kind = "") {
   }
 }
 
+function setBusyState(busy, progressMessage = "正在上传并转换，请稍等片刻...") {
+  isConverting = busy;
+  progressNode.hidden = !busy;
+  progressTextNode.textContent = progressMessage;
+  convertButton.disabled = busy || selectedFile === null;
+  convertButton.textContent = busy ? "正在转换..." : defaultButtonLabel;
+  convertButton.classList.toggle("is-loading", busy);
+  dropzone.classList.toggle("is-busy", busy);
+}
+
 function setSelectedFile(file) {
   selectedFile = file;
   if (file) {
@@ -38,6 +51,7 @@ function setSelectedFile(file) {
   }
 
   selection.textContent = "当前还没有选择文件。";
+  setBusyState(false);
   convertButton.disabled = true;
   setStatus("上传、转换、下载一步完成，整个过程会尽量保持简单直接。", "");
 }
@@ -61,8 +75,7 @@ async function convertSelectedFile() {
     return;
   }
 
-  isConverting = true;
-  convertButton.disabled = true;
+  setBusyState(true);
   setStatus("正在上传并转换，请稍等片刻...", "");
 
   try {
@@ -80,6 +93,7 @@ async function convertSelectedFile() {
       throw new Error(payload.error || "上传失败。");
     }
 
+    progressTextNode.textContent = "转换完成，正在准备下载...";
     const blob = await response.blob();
     const downloadName = parseDownloadName(response.headers.get("Content-Disposition"));
     const downloadUrl = URL.createObjectURL(blob);
@@ -97,8 +111,7 @@ async function convertSelectedFile() {
   } catch (error) {
     setStatus(error.message || "转换失败。", "is-error");
   } finally {
-    isConverting = false;
-    convertButton.disabled = selectedFile === null;
+    setBusyState(false);
   }
 }
 
