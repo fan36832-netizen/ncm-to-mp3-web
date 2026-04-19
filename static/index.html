@@ -12,7 +12,7 @@
         <p class="eyebrow">在线音频转换</p>
         <h1>NCM 转 MP3</h1>
         <p class="subtitle">
-          上传一个 <code>.ncm</code> 音乐文件，转换完成后就能直接下载 <code>.mp3</code>，不用安装额外软件。
+          上传一个 <code>.ncm</code> 音乐文件，选中文件后会自动开始转换，完成后就能直接下载 <code>.mp3</code>。
         </p>
       </section>
 
@@ -20,7 +20,7 @@
         <label class="dropzone" id="dropzone" for="file-input">
           <input id="file-input" type="file" accept=".ncm" hidden>
           <span class="dropzone-title">把 .ncm 文件拖到这里</span>
-          <span class="dropzone-text">或者点击这里，从电脑中选择一个 .ncm 文件</span>
+          <span class="dropzone-text">或者点击这里，从电脑中选择一个 .ncm 文件，选中后会自动开始转换</span>
         </label>
 
         <div class="selection" id="selection">当前还没有选择文件。</div>
@@ -29,7 +29,7 @@
           开始转换并下载
         </button>
 
-        <p class="status" id="status">上传、转换、下载一步完成，整个过程会尽量保持简单直接。</p>
+        <p class="status" id="status">选中文件后会自动开始转换，上传、转换、下载一步完成。</p>
       </section>
 
       <section class="tips">
@@ -39,7 +39,7 @@
         </div>
         <div class="tip-card">
           <h2>使用说明</h2>
-          <p>当前一次处理一个文件，更适合日常单曲转换。文件越大，上传和转换耗时也会相应增加。</p>
+          <p>当前一次处理一个文件，更适合日常单曲转换。如果自动转换失败，也可以再点按钮手动重试。</p>
         </div>
       </section>
     </main>
