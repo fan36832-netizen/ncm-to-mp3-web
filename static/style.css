@@ -95,6 +95,11 @@ h1 {
   box-shadow: inset 0 0 0 1px rgba(200, 93, 44, 0.12);
 }
 
+.dropzone.is-busy {
+  opacity: 0.72;
+  pointer-events: none;
+}
+
 .dropzone-title {
   font-size: 1.6rem;
   font-weight: 700;
@@ -113,6 +118,31 @@ h1 {
   color: var(--muted);
 }
 
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(200, 93, 44, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 247, 238, 0.92);
+  color: var(--accent-dark);
+}
+
+.progress-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(200, 93, 44, 0.18);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.progress-text {
+  font-weight: 600;
+}
+
 .primary-button {
   margin-top: 18px;
   padding: 15px 22px;
@@ -129,6 +159,10 @@ h1 {
 
 .primary-button:hover:not(:disabled) {
   transform: translateY(-1px);
+}
+
+.primary-button.is-loading {
+  background: linear-gradient(135deg, #b5572e 0%, #d57546 100%);
 }
 
 .primary-button:disabled {
@@ -174,6 +208,12 @@ h1 {
   margin: 0;
   line-height: 1.7;
   color: var(--muted);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 code {
