@@ -32,13 +32,13 @@ function setSelectedFile(file) {
   if (file) {
     selection.textContent = `${file.name} (${formatBytes(file.size)})`;
     convertButton.disabled = false;
-    setStatus("文件已就绪，可以开始转换。", "");
+    setStatus("文件已准备好，点击按钮就可以开始转换。", "");
     return;
   }
 
   selection.textContent = "当前还没有选择文件。";
   convertButton.disabled = true;
-  setStatus("上传、转换、下载，整个过程会尽量保持简单直接。", "");
+  setStatus("上传、转换、下载一步完成，整个过程会尽量保持简单直接。", "");
 }
 
 function parseDownloadName(contentDisposition) {
@@ -61,7 +61,7 @@ async function convertSelectedFile() {
   }
 
   convertButton.disabled = true;
-  setStatus("正在上传并转换，请稍等...", "");
+  setStatus("正在上传并转换，请稍等片刻...", "");
 
   try {
     const response = await fetch("/api/convert", {
