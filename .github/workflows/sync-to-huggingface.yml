@@ -8,11 +8,15 @@ on:
 
 jobs:
   sync-to-hub:
-    if: ${{ vars.HF_SPACE_REPO_ID != '' && secrets.HF_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Verify Hugging Face settings
+        run: |
+          test -n "${{ vars.HF_SPACE_REPO_ID }}" || (echo "HF_SPACE_REPO_ID is missing" && exit 1)
+          test -n "${{ secrets.HF_TOKEN }}" || (echo "HF_TOKEN is missing" && exit 1)
 
       - name: Sync to Hugging Face Space
         uses: huggingface/hub-sync@v0.1.0
