@@ -5,6 +5,7 @@ const convertButton = document.getElementById("convert-button");
 const statusNode = document.getElementById("status");
 
 let selectedFile = null;
+let isConverting = false;
 
 function formatBytes(size) {
   const units = ["B", "KB", "MB", "GB"];
@@ -31,8 +32,8 @@ function setSelectedFile(file) {
   selectedFile = file;
   if (file) {
     selection.textContent = `${file.name} (${formatBytes(file.size)})`;
-    convertButton.disabled = false;
-    setStatus("文件已准备好，点击按钮就可以开始转换。", "");
+    convertButton.disabled = isConverting;
+    setStatus("文件已准备好，正在开始转换...", "");
     return;
   }
 
@@ -56,10 +57,11 @@ function parseDownloadName(contentDisposition) {
 }
 
 async function convertSelectedFile() {
-  if (!selectedFile) {
+  if (!selectedFile || isConverting) {
     return;
   }
 
+  isConverting = true;
   convertButton.disabled = true;
   setStatus("正在上传并转换，请稍等片刻...", "");
 
@@ -95,6 +97,7 @@ async function convertSelectedFile() {
   } catch (error) {
     setStatus(error.message || "转换失败。", "is-error");
   } finally {
+    isConverting = false;
     convertButton.disabled = selectedFile === null;
   }
 }
@@ -124,6 +127,7 @@ dropzone.addEventListener("drop", (event) => {
 
   fileInput.files = event.dataTransfer.files;
   setSelectedFile(file);
+  convertSelectedFile();
 });
 
 fileInput.addEventListener("change", () => {
@@ -141,6 +145,7 @@ fileInput.addEventListener("change", () => {
   }
 
   setSelectedFile(file);
+  convertSelectedFile();
 });
 
 convertButton.addEventListener("click", convertSelectedFile);
