@@ -1,8 +1,8 @@
 ---
 title: NCM 转 MP3
 emoji: 🎵
-colorFrom: orange
-colorTo: yellow
+colorFrom: yellow
+colorTo: blue
 sdk: docker
 app_port: 8000
 short_description: 在线把 .ncm 文件转换成 MP3
